@@ -3,7 +3,7 @@ package com.example.nipashe.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "article")
+@Entity(tableName = "article")  //to save Article to db
 data class Article(
     @PrimaryKey(autoGenerate = true)
     val id : Int ?=null,
