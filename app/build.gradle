@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
 
     id "androidx.navigation.safeargs.kotlin"
-
+    id 'dagger.hilt.android.plugin'
 
     id 'kotlin-kapt'
 }
@@ -46,6 +46,7 @@ dependencies {
     // Architectural Components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
+
     // Room
     implementation "androidx.room:room-runtime:2.2.5"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -61,6 +62,7 @@ dependencies {
     // Coroutine Lifecycle Scopes
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
