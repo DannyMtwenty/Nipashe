@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nipashe.R
@@ -50,6 +51,15 @@ class BreakingNewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView=view.findViewById(R.id.rvBreakingNews)
         progressBar=view.findViewById(R.id.paginationProgressBar)
+
+        newsAdapter.setOnClickListener {
+           //create bundle
+            val bundle=Bundle().apply {
+                putSerializable("article",it)
+            }
+            findNavController().navigate(R.id.action_breakingNewsFragment_to_articleFragment,bundle)
+        }
+
 
         //populate recyclerview
         setRecyclerView()

@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nipashe.R
@@ -65,6 +66,14 @@ class SearchNewsFragment : Fragment() {
         //populate recyclerview
         setRecyclerView()
 
+        //item listener
+        newsAdapter.setOnClickListener {
+            //create bundle
+            val bundle=Bundle().apply {
+                putSerializable("article",it)
+            }
+            findNavController().navigate(R.id.action_searchNewsFragment_to_articleFragment,bundle)
+        }
 
         val viewModel = ViewModelProviders.of(this,viewModelFactory).get(NewsViewModel::class.java)
 

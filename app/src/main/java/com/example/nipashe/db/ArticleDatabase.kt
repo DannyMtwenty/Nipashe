@@ -9,7 +9,7 @@ import com.example.nipashe.data.Article
 
 @Database(
     entities = [Article::class,],
-    version = 1)
+    version = 3)
 
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase : RoomDatabase(){
@@ -30,6 +30,6 @@ abstract class ArticleDatabase : RoomDatabase(){
         fun createItemDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
            ArticleDatabase::class.java,
-            "ArticleDb").build()
+            "ArticleDb").fallbackToDestructiveMigration().build()
     }
 }

@@ -3,6 +3,7 @@ package com.example.nipashe.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.nipashe.data.Article
 import com.example.nipashe.data.NewsResponse
 import com.example.nipashe.repository.NewsRepository
 import com.example.nipashe.utils.Result
@@ -58,5 +59,15 @@ class NewsViewModel @Inject constructor (private val newsRepository: NewsReposit
         return Result.Error(response.message())
 
     }
+
+    fun upsert(article: Article)=viewModelScope.launch {
+        newsRepository.upsert(article)
+    }
+
+    fun delete(article: Article)=viewModelScope.launch {
+        newsRepository.delete(article)
+    }
+
+    fun getSavedNews()=newsRepository.getSavedNews()
 
 }
