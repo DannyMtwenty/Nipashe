@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -36,6 +37,8 @@ class SearchNewsFragment : Fragment() {
 
     val TAG ="SearchNewsFragment "
     val newsAdapter= NewsAdapter()
+
+    val viewModel : NewsViewModel by viewModels()
 
     @Inject
     lateinit var viewModelFactory : NewsViewModelFactory
@@ -75,7 +78,7 @@ class SearchNewsFragment : Fragment() {
             findNavController().navigate(R.id.action_searchNewsFragment_to_articleFragment,bundle)
         }
 
-        val viewModel = ViewModelProviders.of(this,viewModelFactory).get(NewsViewModel::class.java)
+       // val viewModel = ViewModelProviders.of(this,viewModelFactory).get(NewsViewModel::class.java)
 
         var job  : Job ? =null
 
@@ -97,29 +100,11 @@ class SearchNewsFragment : Fragment() {
 
         }
 
-        viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
-            when(response){
-                is Result.Success -> {
-                    hideProgressBar()
-                    response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles)
-                    }
-                }
+        viewModel.Articlelist.observe(viewLifecycleOwner){ pagingdata ->
 
-                is Result.Error -> {
-                    hideProgressBar()
-                    response.message?.let {message->
-                        Log.e(TAG,"error occured: $message")
-                    }
+            newsAdapter.submitData(lifecycle,pagingdata)
 
-                }
-
-                is Result.Loading ->{
-                    showProgressBar()
-                }
-            }
-
-        })
+        }
     }
 
     private fun hideProgressBar(){

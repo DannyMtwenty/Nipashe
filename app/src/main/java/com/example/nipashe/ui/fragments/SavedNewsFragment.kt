@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nipashe.R
 import com.example.nipashe.adapters.NewsAdapter
+import com.example.nipashe.adapters.SavedNewsAdapter
 import com.example.nipashe.ui.NewsViewModel
 import com.example.nipashe.ui.NewsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SavedNewsFragment : Fragment() {
  lateinit var recyclerView : RecyclerView
- val newsAdapter= NewsAdapter()
+ val newsAdapter= SavedNewsAdapter()
 
  @Inject
  lateinit var newsViewModelFactory: NewsViewModelFactory
@@ -79,7 +80,7 @@ class SavedNewsFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position=viewHolder.adapterPosition  // position of the swapped item
+                val position=viewHolder.absoluteAdapterPosition // position of the swapped item
                 var article=newsAdapter.differ.currentList[position]
                 viewModel.delete(article)
                 Snackbar.make(view,"item deleted!",Snackbar.LENGTH_LONG).apply {

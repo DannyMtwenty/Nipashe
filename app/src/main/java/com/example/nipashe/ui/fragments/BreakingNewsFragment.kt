@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nipashe.R
+import com.example.nipashe.adapters.BreakingNewsAdapter
 import com.example.nipashe.adapters.NewsAdapter
 import com.example.nipashe.ui.NewsViewModel
 import com.example.nipashe.ui.NewsViewModelFactory
@@ -27,7 +28,7 @@ class BreakingNewsFragment : Fragment() {
     lateinit var progressBar: ProgressBar
 
     val TAG ="BreakingNewsFragment "
-    val newsAdapter= NewsAdapter()
+    val newsAdapter= BreakingNewsAdapter ()
 
     @Inject
     lateinit var viewModelFactory : NewsViewModelFactory
@@ -57,6 +58,7 @@ class BreakingNewsFragment : Fragment() {
             val bundle=Bundle().apply {
                 putSerializable("article",it)
             }
+
             findNavController().navigate(R.id.action_breakingNewsFragment_to_articleFragment,bundle)
         }
 
@@ -66,29 +68,11 @@ class BreakingNewsFragment : Fragment() {
 
         val viewModel = ViewModelProviders.of(this,viewModelFactory).get(NewsViewModel::class.java)
 
-        viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
-            when(response){
-                is Result.Success -> {
-                    hideProgressBar()
-                    response.data?.let { newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles)
-                    }
-                }
+        viewModel.breakingNewslist.observe(viewLifecycleOwner){ pagingdata ->
 
-                is Result.Error -> {
-                    hideProgressBar()
-                    response.message?.let {message->
-                        Log.e(TAG,"error occured: $message")
-                    }
+            newsAdapter.submitData(lifecycle,pagingdata)
 
-                }
-
-                is Result.Loading ->{
-                    showProgressBar()
-                }
-            }
-
-        })
+        }
     }
 
     private fun hideProgressBar(){

@@ -6,14 +6,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.nipashe.R
 import com.example.nipashe.data.Article
 
-class NewsAdapter :  PagingDataAdapter<Article,NewsAdapter.articleViewHolder>(differCallback) {
+class BreakingNewsAdapter :  PagingDataAdapter<Article, BreakingNewsAdapter.articleViewHolder>(differCallback) {
 
     //viewholder class
     inner class articleViewHolder(itemview : View)  : RecyclerView.ViewHolder(itemview){
@@ -28,15 +27,15 @@ class NewsAdapter :  PagingDataAdapter<Article,NewsAdapter.articleViewHolder>(di
     //diff util
     companion object{
 
-     val differCallback=object : DiffUtil.ItemCallback<Article>(){
-        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem.url == newItem.url
-        }
+        val differCallback=object : DiffUtil.ItemCallback<Article>(){
+            override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
+                return oldItem.url == newItem.url
+            }
 
-        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-            return oldItem == newItem
+            override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
+                return oldItem == newItem
+            }
         }
-    }
     }
 
     //val differ=AsyncListDiffer(this,differCallback)
@@ -52,20 +51,20 @@ class NewsAdapter :  PagingDataAdapter<Article,NewsAdapter.articleViewHolder>(di
         //set values or listeners for the views
         var article=getItem(position)
 
-       holder.itemView.apply {
-           Glide.with(this).load(article?.urlToImage).into(holder.articleImage)
-           holder.tvsource.text=article?.source?.name
-           holder.tvTitle.text=article?.title
-           holder.tvDesc.text=article?.description
-           holder.tvPublishedAt.text=article?.publishedAt
-           //listener
-           setOnClickListener{
-               onItemClickListener ?.let {
-                   it(article!!)
-               }
+        holder.itemView.apply {
+            Glide.with(this).load(article?.urlToImage).into(holder.articleImage)
+            holder.tvsource.text=article?.source?.name
+            holder.tvTitle.text=article?.title
+            holder.tvDesc.text=article?.description
+            holder.tvPublishedAt.text=article?.publishedAt
+            //listener
+            setOnClickListener{
+                onItemClickListener ?.let {
+                    it(article!!)
+                }
 
-           }
-       }
+            }
+        }
 
 
 

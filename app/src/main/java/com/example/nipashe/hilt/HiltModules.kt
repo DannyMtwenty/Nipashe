@@ -53,8 +53,8 @@ object HiltModules {
 
 
     @Provides
-    fun providesViewModelFactory(repository: NewsRepository) : NewsViewModelFactory{
-        return  NewsViewModelFactory(repository)
+    fun providesViewModelFactory(repository: NewsRepository,newsApi: NewsApi) : NewsViewModelFactory{
+        return  NewsViewModelFactory(repository,newsApi)
 
     }
 
